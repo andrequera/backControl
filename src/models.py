@@ -36,6 +36,19 @@ class Cliente(Base.Model):
     email = Base.Column(Base.String(250), nullable=False)
     telefono = Base.Column(Base.Integer)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "empresa":self.empresa,
+            "email": self.email,
+            "telefono":self.telefono,
+            "cotizacion": list(map(lambda x: x.serialize(), self.cotizacion)),
+            "pedido": list(map(lambda x: x.serialize(), self.pedido))
+    # do not serialize the password, its a security breach
+            }
+
+
 class Cotizacion(Base.Model):
     #__tablename__ = 'cotizacion'
     # Here we define columns for the table address.
@@ -50,6 +63,21 @@ class Cotizacion(Base.Model):
     cliente_id = Base.Column(Base.Integer, ForeignKey('cliente.id'))
     cliente = relationship(Cliente)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "producto": self.producto,
+            "descripcion":self.descripcion,
+            "paletas": self.paletas,
+            "botellas":self.botellas,
+            "sku": self.sku,
+            "total":self.total,
+            "cliente_id": self.cliente_id,
+            
+    # do not serialize the password, its a security breach
+            }
+
+
 class Pedido(Base.Model):
     #@__tablename__ = 'pedido'
     id = Base.Column(Base.Integer, primary_key=True)
@@ -62,15 +90,45 @@ class Pedido(Base.Model):
     cliente_id = Base.Column(Base.Integer, ForeignKey('cliente.id'))
     cliente = relationship(Cliente)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "producto": self.producto,
+            "descripcion":self.descripcion,
+            "paletas": self.paletas,
+            "botellas":self.botellas,
+            "sku": self.sku,
+            "total":self.total,
+            "cliente_id": self.cliente_id,
+            
+    # do not serialize the password, its a security breach
+            }
+
+
 class Inventario(Base.Model):
     #__tablename__='inventario'
-    id = Base.Column(Base.Integer, primary_key=True)
-    sku = Base.Column(Base.String(50))
+    id = Base.Column(Base.Integer)
+    sku = Base.Column(Base.String(50), primary_key=True)
     producto = Base.Column(Base.String(50))
     caja = Base.Column(Base.Integer)
     cantidad = Base.Column(Base.Integer)
     precio = Base.Column(Base.Integer)
     fecha = Base.Column(DateTime,default=datetime.datetime.utcnow())
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "sku": self.sku,
+            "producto":self.producto,
+            "caja": self.caja,
+            "cantidad":self.cantidad,
+            "precio": self.precio,
+            "fecha":self.fecha,
+           
+            
+    # do not serialize the password, its a security breach
+            }
+
 
 class Producto(Base.Model):
     #__tablename__='producto'
@@ -82,6 +140,19 @@ class Producto(Base.Model):
     sku = Base.Column(Base.String(50), ForeignKey ('inventario.sku'))
     inventario = relationship(Inventario)
 
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "descripcion":self.descripcion,
+            "paleta": self.paleta,
+            "cantidad":self.cantidad,
+            "sku": self.sku,
+                        
+    # do not serialize the password, its a security breach
+            }
+
+
 class Pedidos_Productos(Base.Model):
     #__tablename__='pedidos_productos'
     id = Base.Column(Base.Integer, primary_key=True)
@@ -89,6 +160,15 @@ class Pedidos_Productos(Base.Model):
     pedido = relationship(Pedido)
     producto_id = Base.Column(Base.Integer, ForeignKey('producto.id'))
     producto = relationship(Producto)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "pedido_id": self.nombre,
+            "producto_id":self.descripcion,
+           
+    # do not serialize the password, its a security breach
+            }
 
 
 
@@ -99,14 +179,3 @@ class Pedidos_Productos(Base.Model):
 
 ## Draw from SQLAlchemy base
 #render_er(Base, 'diagram.png')
-
-
-
-
-
-
-
-
-
-
-
