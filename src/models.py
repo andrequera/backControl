@@ -43,8 +43,8 @@ class Cliente(Base.Model):
             "empresa":self.empresa,
             "email": self.email,
             "telefono":self.telefono,
-            "cotizacion": list(map(lambda x: x.serialize(), self.cotizacion)),
-            "pedido": list(map(lambda x: x.serialize(), self.pedido))
+            # "cotizacion": list(map(lambda x: x.serialize(), self.cotizacion)),
+            # "pedido": list(map(lambda x: x.serialize(), self.pedido))
     # do not serialize the password, its a security breach
             }
 
@@ -93,12 +93,12 @@ class Pedido(Base.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "producto": self.producto,
-            "descripcion":self.descripcion,
-            "paletas": self.paletas,
-            "botellas":self.botellas,
+            "nombre_cliente": self.nombre_cliente,
+            "fecha":self.fecha,
             "sku": self.sku,
-            "total":self.total,
+            "producto":self.producto,
+            "paleta": self.paleta,
+            "cantidad":self.cantidad,
             "cliente_id": self.cliente_id,
             
     # do not serialize the password, its a security breach

@@ -34,11 +34,34 @@ def sitemap():
 @app.route('/user', methods=['GET'])
 def handle_hello():
 
-    response_body = {
-        "msg": "Hello, this is your GET /user response "
-    }
+    users = User.query.all()
+    all_users = list(map(lambda x: x.serialize(), users))
 
-    return jsonify(response_body), 200
+    return jsonify(all_users), 200
+
+@app.route('/cliente', methods=['GET'])
+def cliente():
+
+    clientes = Cliente.query.all()
+    all_clientes = list(map(lambda x: x.serialize(), clientes))
+
+    return jsonify(all_clientes), 200
+
+@app.route('/cotizacion', methods=['GET'])
+def cotizacion():
+
+    cotizaciones = Cotizacion.query.all()
+    all_cotizaciones = list(map(lambda x: x.serialize(), cotizaciones))
+
+    return jsonify(all_cotizaciones), 200
+
+@app.route('/pedido', methods=['GET'])
+def pedido():
+
+    pedidos = Pedido.query.all()
+    all_pedidos = list(map(lambda x: x.serialize(), pedidos))
+
+    return jsonify(all_pedidos), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
