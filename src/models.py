@@ -108,22 +108,22 @@ class Pedido(Base.Model):
 class Inventario(Base.Model):
     #__tablename__='inventario'
     id = Base.Column(Base.Integer)
-    sku = Base.Column(Base.String(50), primary_key=True)
-    producto = Base.Column(Base.String(50))
-    caja = Base.Column(Base.Integer)
-    cantidad = Base.Column(Base.Integer)
-    precio = Base.Column(Base.Integer)
-    fecha = Base.Column(DateTime,default=datetime.datetime.utcnow())
+    skuinventario = Base.Column(Base.String(50), primary_key=True)
+    productoinventario = Base.Column(Base.String(50))
+    paletainventario = Base.Column(Base.Integer)
+    cantidadinventario = Base.Column(Base.Integer)
+    precioinventario = Base.Column(Base.Integer)
+    fechainventario = Base.Column(DateTime,default=datetime.datetime.utcnow())
 
     def serialize(self):
         return {
             "id": self.id,
-            "sku": self.sku,
-            "producto":self.producto,
-            "caja": self.caja,
-            "cantidad":self.cantidad,
-            "precio": self.precio,
-            "fecha":self.fecha,
+            "skuinventario": self.skuinventario,
+            "productoinventario":self.productoinventario,
+            "paletainventario": self.paletainventario,
+            "cantidadinventario":self.cantidadinventario,
+            "precioinventario": self.precioinventario,
+            "fechainventario":self.fechainventario,
            
             
     # do not serialize the password, its a security breach
@@ -137,7 +137,7 @@ class Producto(Base.Model):
     descripcion = Base.Column(Base.String(50))
     paleta = Base.Column(Base.Integer)
     cantidad = Base.Column(Base.Integer)
-    sku = Base.Column(Base.String(50), ForeignKey ('inventario.sku'))
+    sku = Base.Column(Base.String(50), ForeignKey ('inventario.skuinventario'))
     inventario = relationship(Inventario)
 
     def serialize(self):

@@ -63,6 +63,14 @@ def pedido():
 
     return jsonify(all_pedidos), 200
 
+@app.route('/inventario', methods=['GET'])
+def inventario():
+
+    inventarios = Inventario.query.all()
+    all_inventarios = list(map(lambda x: x.serialize(), inventarios))
+
+    return jsonify(all_inventarios), 200
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
