@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Cliente, Cotizacion, Pedido, Inventario, Producto, Base
+from models import db, User, Cliente, Cotizacion, Pedido, Inventario, Producto, Pedidos_Productos, Base
 #from models import Person
 
 app = Flask(__name__)
@@ -70,6 +70,22 @@ def inventario():
     all_inventarios = list(map(lambda x: x.serialize(), inventarios))
 
     return jsonify(all_inventarios), 200
+
+@app.route('/producto', methods=['GET'])
+def producto():
+
+    productos = Producto.query.all()
+    all_productos = list(map(lambda x: x.serialize(), productos))
+
+    return jsonify(all_productos), 200
+
+@app.route('/pp', methods=['GET'])
+def pp():
+
+    pps = Pedidos_Productos.query.all()
+    all_pps = list(map(lambda x: x.serialize(), pps))
+
+    return jsonify(all_pps), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

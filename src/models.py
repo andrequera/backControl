@@ -107,8 +107,8 @@ class Pedido(Base.Model):
 
 class Inventario(Base.Model):
     #__tablename__='inventario'
-    id = Base.Column(Base.Integer)
-    skuinventario = Base.Column(Base.String(50), primary_key=True)
+    id = Base.Column(Base.Integer, primary_key=True)
+    skuinventario = Base.Column(Base.String(50))
     productoinventario = Base.Column(Base.String(50))
     paletainventario = Base.Column(Base.Integer)
     cantidadinventario = Base.Column(Base.Integer)
@@ -132,12 +132,13 @@ class Inventario(Base.Model):
 
 class Producto(Base.Model):
     #__tablename__='producto'
-    id= Base.Column(Base.Integer, primary_key=True)
+    id = Base.Column(Base.Integer, primary_key=True)
     nombre = Base.Column(Base.String(50))
     descripcion = Base.Column(Base.String(50))
     paleta = Base.Column(Base.Integer)
     cantidad = Base.Column(Base.Integer)
-    sku = Base.Column(Base.String(50), ForeignKey ('inventario.skuinventario'))
+    sku = Base.Column(Base.String(50))
+    inventario_id = Base.Column(Base.Integer, ForeignKey('inventario.id'))
     inventario = relationship(Inventario)
 
     def serialize(self):
@@ -148,6 +149,7 @@ class Producto(Base.Model):
             "paleta": self.paleta,
             "cantidad":self.cantidad,
             "sku": self.sku,
+            "inventario_id": self.inventario_id,
                         
     # do not serialize the password, its a security breach
             }
@@ -164,8 +166,8 @@ class Pedidos_Productos(Base.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "pedido_id": self.nombre,
-            "producto_id":self.descripcion,
+            "pedido_id": self.pedido_id,
+            "producto_id":self.producto_id,
            
     # do not serialize the password, its a security breach
             }
