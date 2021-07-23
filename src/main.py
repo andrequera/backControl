@@ -71,6 +71,32 @@ def inventario():
 
     return jsonify(all_inventarios), 200
 
+
+
+@app.route('/inventario', methods=['POST'])
+def agregar_inventario():
+
+    # First we get the payload json
+    body = request.get_json()
+
+    if body is None:
+        raise APIException("You need to specify the request body as a json object", status_code=400)
+    if 'skuinventario' not in body:
+        raise APIException('You need to specify the sku', status_code=400)
+    if 'productoinventario' not in body:
+        raise APIException('You need to specify the producto', status_code=400)
+
+    # at this point, all data has been validated, we can proceed to inster into the bd
+    inventario1 = Inventario(skuinventario=body['skuinventario'], productoinventario=body['productoinventario'])
+    Base.session.add(inventario1)
+    Base.session.commit()
+    return "ok", 200
+
+
+
+
+
+
 @app.route('/producto', methods=['GET'])
 def producto():
 
