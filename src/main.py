@@ -85,9 +85,18 @@ def agregar_inventario():
         raise APIException('You need to specify the sku', status_code=400)
     if 'productoinventario' not in body:
         raise APIException('You need to specify the producto', status_code=400)
+    if 'paletainventario' not in body:
+        raise APIException('You need to specify the paleta', status_code=400)
+    if 'cantidadinventario' not in body:
+        raise APIException('You need to specify the cantidad', status_code=400)
+    if 'precioinventario' not in body:
+        raise APIException('You need to specify the precio', status_code=400)
+    if 'fechainventario' not in body:
+        raise APIException('You need to specify the fecha', status_code=400)
+
 
     # at this point, all data has been validated, we can proceed to inster into the bd
-    inventario1 = Inventario(skuinventario=body['skuinventario'], productoinventario=body['productoinventario'])
+    inventario1 = Inventario(skuinventario=body['skuinventario'], productoinventario=body['productoinventario'], paletainventario=body['paletainventario'], cantidadinventario=body['cantidadinventario'], precioinventario=body['precioinventario'], fechainventario=body['fechainventario'])
     Base.session.add(inventario1)
     Base.session.commit()
     return "ok", 200
