@@ -78,6 +78,7 @@ def agregar_inventario():
 
     # First we get the payload json
     body = request.get_json()
+    print(body)
 
     if body is None:
         raise APIException("You need to specify the request body as a json object", status_code=400)
