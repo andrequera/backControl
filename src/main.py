@@ -103,6 +103,39 @@ def agregar_inventario():
     return "ok", 200
 
 
+@app.route('/inventario/<int:id>', methods=['DELETE'])
+def borrarInventario(id):
+
+    inventarios = Inventario.query.get(id)
+    print(inventarios, id)   
+    if inventarios is None:
+        raise APIException('User not found', status_code=404)
+
+    Base.session.delete(inventarios)
+    Base.session.commit()
+
+    #inventarios = list(map(lambda x: x.serialize(), inventarios))
+    return "ok borrado", 200
+
+
+
+
+# @APP.route('/inventario', methods=['PUT'])
+# def inventario():
+
+#    body = request.get_json() #{ 'username': 'new_username'}
+#     if request.method == 'PUT':
+#         producto1 = Person.query.all()
+#         producto1.skuinventario = body.skuinventario
+#         data.session.commit()
+#         return jsonify(producto1.serialize()), 200
+
+
+
+
+
+
+
 
 
 
