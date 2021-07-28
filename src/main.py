@@ -119,25 +119,19 @@ def borrarInventario(id):
 
 
 
+@app.route('/inventario/<int:id>', methods=['PUT'])
+def actualizarInventario(id):
 
-# @APP.route('/inventario', methods=['PUT'])
-# def inventario():
-
-#    body = request.get_json() #{ 'username': 'new_username'}
-#     if request.method == 'PUT':
-#         producto1 = Person.query.all()
-#         producto1.skuinventario = body.skuinventario
-#         data.session.commit()
-#         return jsonify(producto1.serialize()), 200
-
-
-
-
-
-
-
-
-
+    body = request.get_json() 
+    print(body)
+    if request.method == 'PUT':
+        inventario = Inventario.query.get()
+        print(inventario)
+        inventario.skuinventario = body.skuinventario
+        Base.session.commit()
+        return jsonify(inventario.serialize()), 200
+    
+    return "Invalid Method", 404
 
 
 @app.route('/producto', methods=['GET'])
